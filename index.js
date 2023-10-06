@@ -9,10 +9,14 @@ const PORT = 3000;
 //mongoose connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/CRMdb', {
- useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true // Add this line for the latest versions of MongoDB
 }).then(() => {
-  console.log("connection successfully ");
-})
+  console.log("Connection successfully established with MongoDB");
+}).catch(err => {
+  console.error("Error connecting to MongoDB: ", err);
+});
+
 
 //bodyparser setup
 app.use(bodyParser.urlencoded({extended: true}));

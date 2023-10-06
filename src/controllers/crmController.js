@@ -6,28 +6,35 @@ const Contact = mongoose.model("Contact", ContactSchema);
 export const addNewContact = (req, res) => {
   let newContact = new Contact(req.body);
 
-  newContact.save((err, contact) => {
-    if (err) {
+  newContact.save()
+    .then(contact => {
+      res.json(contact);
+    })
+    .catch(err => {
       res.send(err);
-    }
-    res.json(contact);
-  });
+    });
 };
 
 export const getContacts = (req, res) => {
-  Contact.find({}, (err, contact) => {
-    if (err) {
+  Contact.find({})
+    .then(contacts => {
+      res.json(contacts);
+    })
+    .catch(err => {
       res.send(err);
-    }
-    res.json(contact);
-  });
+    });
 };
 
-export const getContactswithID = (req, res) => {
-  Contact.findById(req.params.contactId, (err, contact) => {
-    if (err) {
+export const getContactsWithID = (req, res) => {
+  Contact.findById(req.params.contactId)
+    .then(contact => {
+      if (contact) {
+        res.json(contact);
+      } else {
+        res.status(404).json({ message: 'Contact not found' });
+      }
+    })
+    .catch(err => {
       res.send(err);
-    }
-    res.json(contact);
-  });
+    });
 };
