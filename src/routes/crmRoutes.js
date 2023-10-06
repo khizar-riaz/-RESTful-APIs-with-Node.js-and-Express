@@ -2,6 +2,7 @@ import {
     addNewContact,
     getContacts,
     getContactsWithID,
+    updateContact
   } from "../controllers/crmController";
   
   const routes = (app) => {
@@ -22,7 +23,7 @@ import {
       .route("/contacts/:contactId") // Dynamic parameter added to the endpoint
       // Get specific contact
       .get(getContactsWithID)
-      .put((req, res) => res.send("PUT request successful"))
+      .put(updateContact)
       .delete((req, res) => res.send("DELETE request successful"));
   };
   

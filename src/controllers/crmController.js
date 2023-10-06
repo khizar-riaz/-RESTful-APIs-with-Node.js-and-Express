@@ -7,8 +7,8 @@ export const addNewContact = (req, res) => {
   let newContact = new Contact(req.body);
 
   newContact.save()
-    .then(contact => {
-      res.json(contact);
+    .then(contacts => {
+      res.json(contacts);
     })
     .catch(err => {
       res.send(err);
@@ -27,9 +27,9 @@ export const getContacts = (req, res) => {
 
 export const getContactsWithID = (req, res) => {
   Contact.findById(req.params.contactId)
-    .then(contact => {
-      if (contact) {
-        res.json(contact);
+    .then(contacts => {
+      if (contacts) {
+        res.json(contacts);
       } else {
         res.status(404).json({ message: 'Contact not found' });
       }
@@ -38,3 +38,22 @@ export const getContactsWithID = (req, res) => {
       res.send(err);
     });
 };
+
+export const updateContact = (req, res) => {
+  Contact.findOneAndUpdate({ _id: req.params.contactId},req.body, {new: true})
+    .then(contacts => {
+      if (contacts) {
+       res.json(contacts)
+      } 
+    })
+    .catch(err => {
+      res.send(err);
+    });
+};
+
+// export const updateContact = (req, res) => {
+//   Contact.findOneAndUpdate({ _id: req.params.contactId}, req.body, { new: true}, (err, contact) => {
+   
+//   })
+// }
+
